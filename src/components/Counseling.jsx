@@ -37,18 +37,21 @@ export default function Counseling({ needsCounseling, grades }) {
     "04:00 PM"
   ];
 
+  // Filter low performance subjects
   const lowPerformanceSubjects = grades
     .filter((g) => (g.score / g.total) * 100 < 50)
     .map((g) => g.subject);
 
   const uniqueLowSubjects = [...new Set(lowPerformanceSubjects)];
 
+  // Book appointment
   const handleBookAppointment = () => {
     if (selectedInstructor && selectedDate && selectedTime) {
       setIsBooked(true);
     }
   };
 
+  // Reset form
   const handleReset = () => {
     setSelectedInstructor(null);
     setSelectedDate("");
@@ -57,6 +60,7 @@ export default function Counseling({ needsCounseling, grades }) {
     setIsBooked(false);
   };
 
+  // If no counseling needed
   if (!needsCounseling) {
     return (
       <div className="max-w-4xl mx-auto">
@@ -73,6 +77,7 @@ export default function Counseling({ needsCounseling, grades }) {
     );
   }
 
+  // If appointment booked
   if (isBooked) {
     const selectedPerson =
       appointmentType === "instructor"
@@ -125,6 +130,7 @@ export default function Counseling({ needsCounseling, grades }) {
     );
   }
 
+  // Counseling form
   return (
     <div className="max-w-4xl mx-auto space-y-6">
 
@@ -154,22 +160,16 @@ export default function Counseling({ needsCounseling, grades }) {
       {/* Appointment Type */}
       <div className="bg-white border rounded-lg p-6">
         <h3 className="text-lg font-semibold mb-4">Select Appointment Type</h3>
-
         <div className="flex gap-4">
           <button
             onClick={() => setAppointmentType("instructor")}
-            className={`px-4 py-2 border rounded-lg ${
-              appointmentType === "instructor" ? "bg-blue-100 border-blue-400" : ""
-            }`}
+            className={`px-4 py-2 border rounded-lg ${appointmentType === "instructor" ? "bg-blue-100 border-blue-400" : ""}`}
           >
             Instructor
           </button>
-
           <button
             onClick={() => setAppointmentType("counselor")}
-            className={`px-4 py-2 border rounded-lg ${
-              appointmentType === "counselor" ? "bg-blue-100 border-blue-400" : ""
-            }`}
+            className={`px-4 py-2 border rounded-lg ${appointmentType === "counselor" ? "bg-blue-100 border-blue-400" : ""}`}
           >
             Counselor
           </button>
@@ -180,20 +180,15 @@ export default function Counseling({ needsCounseling, grades }) {
       {appointmentType && (
         <div className="bg-white border rounded-lg p-6">
           <h3 className="text-lg font-semibold mb-4">Select Person</h3>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {(appointmentType === "instructor" ? instructors : counselors).map((person) => (
               <button
                 key={person.id}
                 onClick={() => setSelectedInstructor(person.id)}
-                className={`border p-4 rounded-lg text-left ${
-                  selectedInstructor === person.id ? "border-blue-500 bg-blue-50" : ""
-                }`}
+                className={`border p-4 rounded-lg text-left ${selectedInstructor === person.id ? "border-blue-500 bg-blue-50" : ""}`}
               >
                 <p className="font-semibold">{person.name}</p>
-                <p className="text-sm text-gray-600">
-                  {person.subject || person.specialty}
-                </p>
+                <p className="text-sm text-gray-600">{person.subject || person.specialty}</p>
               </button>
             ))}
           </div>
@@ -203,7 +198,6 @@ export default function Counseling({ needsCounseling, grades }) {
       {/* Date */}
       <div className="bg-white border rounded-lg p-6">
         <h3 className="text-lg font-semibold mb-3">Select Date</h3>
-
         <input
           type="date"
           value={selectedDate}
@@ -215,15 +209,12 @@ export default function Counseling({ needsCounseling, grades }) {
       {/* Time Slots */}
       <div className="bg-white border rounded-lg p-6">
         <h3 className="text-lg font-semibold mb-3">Select Time</h3>
-
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {timeSlots.map((slot) => (
             <button
               key={slot}
               onClick={() => setSelectedTime(slot)}
-              className={`border rounded-lg py-2 ${
-                selectedTime === slot ? "bg-blue-100 border-blue-400" : ""
-              }`}
+              className={`border rounded-lg py-2 ${selectedTime === slot ? "bg-blue-100 border-blue-400" : ""}`}
             >
               {slot}
             </button>
