@@ -4,7 +4,7 @@ import {
   Clock,
   User,
   CheckCircle2,
-  MessageCircle,
+  // MessageCircle,
   AlertCircle,
   Video
 } from 'lucide-react';
