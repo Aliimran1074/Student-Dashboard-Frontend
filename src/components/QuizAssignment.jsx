@@ -82,7 +82,7 @@ try{
 
 
 const response=await fetch(
-"http://localhost:4000/api/uploadAssignment",
+"https://univeristy-management-system.vercel.app/api/uploadAssignment",
 {
 method:"POST",
 body:formData
